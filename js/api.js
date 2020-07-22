@@ -37,9 +37,10 @@ module.exports = {
     //future weather forcasts
 
     //Need to change the API to be daily weather and not 5 day 3 hour intervals
-    const url = "http://api.openweathermap.org/data/2.5/forecast?";
+    const url = "https://api.openweathermap.org/data/2.5/onecall?";
     const key = process.env.OW_API_KEY;
-    const query = `${url}lat=${lat}&lon=${lng}&appid=${key}`;
+    const query = `${url}lat=${lat}&lon=${lng}&
+    exclude=current,minutely,hourly&appid=${key}`;
 
     const response = await axios.get(query);
     const data = await response.data;
@@ -62,10 +63,12 @@ module.exports = {
 //Currently only gets current date, need to make a loop once new api is used
 function getWeatherContents(response) {
   //Parse JSON for necessary data to display
-  let conditionValue = response.list[0]["weather"][0]["main"]; //string format
-  let descriptionValue = response.list[0]["weather"][0]["description"]; //string format
-  let tempValue = response.list[0]["main"]["temp"]; //in Kelvins
-  let windValue = response.list[0]["wind"]["speed"]; //in meters per second
+  let conditionValue = response.daily[0]["weather"][0]["main"]; //string format
+  let descriptionValue = response.daily[0]["weather"][0]["description"]; //string format
+  let tempLo = response.daily[0]["temp"]["min"]; //in Kelvins
+  let tempHi = response.daily[0]["temp"]["max"]; //in Kelvins
+  let tempValue = (tempLo + tempHi) / 2; //in Kelvins
+  let windValue = response.daily[0]["wind_speed"]; //in meters per second
 
   //Capitalize the first letters of the strings
   conditionValue =
