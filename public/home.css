@@ -1,3 +1,19 @@
 body {
-    background-color: lightblue;
+  background-color: lightblue;
+}
+.home_page,
+.weather_page {
+  max-width: 1920px;
+  max-height: 900px;
+  min-height: 900px;
+}
+.container {
+  padding-top: 10%;
+  padding-bottom: 15px;
+}
+
+/* Visibility Settings */
+.invisible {
+  visibility: hidden;
+  display: none;
 }

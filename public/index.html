@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Welcome to Firebase Hosting</title>
 
     <!-- update the version number as needed -->
@@ -15,6 +15,11 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
     <link rel="stylesheet" href="home.css" />
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+    />
 
     <!-- <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -31,10 +36,112 @@
       }
     </style> -->
   </head>
-  <body>
-    <div>
-      <h1>Welcome!</h1>
-  </div>
+  <body class="bg-dark">
+    <!-- HOME PAGE WITH INITAL SEARCH BAR -->
+    <div class="home_page invisible">
+      <div class="container" id="home_search_bar">
+        <form
+          id="location"
+          class="bg-light border mx-auto p-4 border border-dark"
+        >
+          <h1 class="mb-3 text-center">PLACEHOLDER TEXT</h1>
+          <div class="form-inline row justify-content-center">
+            <input
+              name="location"
+              type="location"
+              class="form-control ml-3 mr-3 w-75"
+              id="location"
+              placeholder="Portland, OR"
+              required
+            />
+            <div class="text-center">
+              <button type="button" class="btn btn-lrg btn-primary">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- WEATHER PAGE -->
+    <!-- For this "page", give ids to the elements and put the class names in the js file -->
+    <div class="weather_page visible">
+      <!-- SEARCH BAR TO FIND DIFFERENT LOCATIONS AFTER GETTING RESULTS -->
+      <div class="container text-center" id="search_bar">
+        <form
+          id="location"
+          class="bg-light border mx-auto p-2 border border-dark"
+        >
+          <div class="form-inline row justify-content-center">
+            <input
+              name="location"
+              type="location"
+              class="form-control ml-3 mr-3 w-75"
+              id="location"
+              placeholder="Portland, OR"
+              required
+            />
+            <div class="text-center">
+              <button type="button" class="btn btn-lrg btn-primary">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
+      <div class="container-fluid" id="current_container">
+        <div class="row">
+          <div
+            class="card_container w-50 mx-auto pl-4 pr-2"
+            id="current_weather"
+          >
+            <div class="card p-4 m-2">
+              <div class="card_body">
+                <div class="row">
+                  <div class="col text-left" id="current_forecast">
+                    <h4 id="current_temperature">Current temp</h4>
+                    <div id="current_condition">Weather description</div>
+                  </div>
+                  <div class="col text-right" id="temp_range">
+                    <!-- ADD IMG HERE -->
+                    <h4 class="text-right" id="tempHiLo">tempHi | tempLo</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card_container w-50 mx-auto pl-2 pr-4 text-center"
+            id="current_airquality"
+          >
+            <div class="card p-4 m-2">
+              <div class="card_body">
+                <div id="air_quality_card">
+                  <h4 id="air_quality">16</h4>
+                  <h4 id="main_pollutant">PM25</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card p-4 m-2">
+              <div class="card_body">
+                <div id="advisory_card">
+                  <div id="air_advisory">Advisory text here</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 7 DAY FORECAST TABLE-->
+      <table id="forecast_table">
+        <tbody id="forecast_body">
+          <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
+        </tbody>
+      </table>
+    </div>
+
     <!-- <div id="message">
       <h2>Welcome</h2>
       <h1>Firebase Hosting Setup Complete</h1>
@@ -44,7 +151,7 @@
     <p id="load">Firebase SDK Loading&hellip;</p> -->
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
         // // The Firebase SDK is initialized and available here!
         //
@@ -57,11 +164,16 @@
 
         try {
           let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+          let features = ["auth", "database", "messaging", "storage"].filter(
+            (feature) => typeof app[feature] === "function"
+          );
+          document.getElementById(
+            "load"
+          ).innerHTML = `Firebase SDK loaded with ${features.join(", ")}`;
         } catch (e) {
           console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+          document.getElementById("load").innerHTML =
+            "Error loading the Firebase SDK, check the console.";
         }
       });
     </script>
