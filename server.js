@@ -7,23 +7,27 @@
 
 require("dotenv").config();
 const express = require("express");
+const parser = require("body-parser");
 const app = express();
 const api = require("./js/api");
 const port = 3000;
-app.listen(port, console.log(`Listening at port ${port}`));
+app.listen(port, console.log(`Server running at http://localhost:${port}`));
 
 app.use(express.static("public"));
 
-app.get("/weather", function (req, res) {
-  api
-    .getCoords("97206", 1)
-    .then((data) => res.send(data))
-    .catch((error) => console.log(error));
-});
+app.use(
+  parser.urlencoded({
+    extended: false,
+    limit: 1024,
+  })
+);
 
-app.get("/aqi", function (req, res) {
+app.post("/weather", function (req, res) {
   api
-    .getCoords("97206", 2)
-    .then((data) => res.send(data))
+    .getCoords(`${req.body.location}`)
+    .then((data) => {
+      console.log(data);
+      res.end();
+    })
     .catch((error) => console.log(error));
 });
