@@ -1,69 +1,99 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
     <link rel="stylesheet" href="home.css" />
-
-    <!-- <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style> -->
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+    />
   </head>
-  <body>
-    <div>
-      <h1>Welcome!</h1>
-  </div>
-    <!-- <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  <body class="bg-dark">
+    <!-- HOME PAGE WITH INITAL SEARCH BAR -->
+    <div class="home_page visible">
+      <div class="container w-100" id="home_search_bar">
+        <form
+          id="location"
+          class="bg-light border mx-auto p-4 border border-dark"
+        >
+          <h1 class="mb-3 text-center">PLACEHOLDER TEXT</h1>
+          <div class="form-inline row justify-content-center">
+            <input
+              name="location"
+              type="location"
+              class="form-control ml-3 mr-3 w-75"
+              id="location"
+              placeholder="Portland, OR"
+            />
+            <div class="text-center">
+              <button
+                type="button"
+                class="btn btn-lrg btn-primary"
+                id="get_location"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- WEATHER PAGE -->
+      <!-- For this "page", give ids to the elements and put the class names in the js file -->
+      <div class="weather_page visible">
+        <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
+        <div class="container-fluid w-100" id="current_container">
+          <div class="row">
+            <div
+              class="card_container w-50 mx-auto pl-4 pr-2"
+              id="current_weather"
+            >
+              <div class="card p-4 m-2">
+                <div class="card_body">
+                  <div class="row">
+                    <div class="col text-left" id="current_forecast">
+                      <h4 id="current_temperature">Current temp</h4>
+                      <div id="current_condition">Weather description</div>
+                    </div>
+                    <div class="col text-right" id="weather_icon">
+                      <!-- ADD IMG HERE -->
+                      <img src="http://openweathermap.org/img/wn/01n@4x.png" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="card_container w-50 mx-auto pl-2 pr-4 text-center"
+              id="current_airquality"
+            >
+              <div class="card p-4 m-2">
+                <div class="card_body">
+                  <div id="air_quality_card">
+                    <h4 id="air_quality">16</h4>
+                    <h4 id="main_pollutant">PM25</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-4 m-2">
+                <div class="card_body">
+                  <div id="advisory_card">
+                    <div id="air_advisory">Advisory text here</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 7 DAY FORECAST TABLE-->
+        <table id="forecast_table">
+          <tbody id="forecast_body">
+            <!-- CONTENTS CREATED AND APPENDED VIA "script.js" -->
+          </tbody>
+        </table>
+      </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p> -->
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
   </body>
 </html>
