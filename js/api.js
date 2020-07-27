@@ -70,11 +70,24 @@ function getWeatherContents(response) {
   //Parse JSON for necessary data to display
   for (let i = 0; i < weatherData.length; ++i) {
     let x = weatherData[i];
+    let dateunix = x["dt"]; //date in unix format
     let conditionValue = x["weather"][0]["main"]; //string format
     let descriptionValue = x["weather"][0]["description"]; //string format
+    let icon = x["weather"][0]["icon"]; //grab icon name
     let tempLo = x["temp"]["min"]; //in Kelvins
     let tempHi = x["temp"]["max"]; //in Kelvins
     let windValue = x["wind_speed"]; //in meters per second
+    let humidityValue = x["humidity"]; //percentage
+    let pressureValue = x["pressure"]; //in hPa
+    let dewpointValue = x["dew_point"]; //in Kelvins
+    let uvindexValue = x["uvi"]; //out of 10
+
+    //Convert to Month/Day from Unix format
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let d = new Date(dateunix * 1000);
+    let weekDay = days[d.getDay()];
+    let day = d.getDate();
+    let date = `${weekDay} ${day}`;
 
     //Capitalize the first letters of the strings
     conditionValue =
@@ -86,17 +99,34 @@ function getWeatherContents(response) {
     let tempValue = (tempLo + tempHi) / 2; //average temp in Kelvins
     let tempF = Math.round(((tempValue - 273.15) * (9 / 5) + 32) * 10) / 10;
     let tempC = Math.round((tempValue - 273.15) * 10) / 10;
+    let dewpointF =
+      Math.round(((dewpointValue - 273.15) * (9 / 5) + 32) * 10) / 10;
+
+    //Convert pressure from hPa to inHg (standard)
+    pressureValue = Math.round(pressureValue * 0.03 * 100) / 100;
 
     //Convert wind speeds to from meters per hour to miles per hour
     let windSpeed = Math.round(windValue * 2.237 * 10) / 10;
 
+    let icon_link;
+    if (i === 0) {
+      icon_link = `http://openweathermap.org/img/wn/${icon}@4x.png`;
+    } else {
+      icon_link = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+    }
     //Create JSON object to add to array
     let obj = {
+      date: date,
       condition: conditionValue,
       description: descriptionValue,
       tempFar: tempF,
       tempCel: tempC,
       wind: windSpeed,
+      humidity: humidityValue,
+      pressire: pressureValue,
+      dew_point: dewpointF,
+      uvi: uvindexValue,
+      icon: icon_link,
     };
     array.push(obj);
   }
@@ -106,8 +136,9 @@ function getWeatherContents(response) {
 //Parse response from Air Visual to get AQI and main pollutant
 function getAirQualityContents(response) {
   // Get current air quality
-  let airQuality = response.data.current.pollution.aqius;
-  let mainPollutant = response.data.current.pollution.mainus;
+  let pollution = response.data.current.pollution;
+  let airQuality = pollution.aqius;
+  let mainPollutant = pollution.mainus;
 
   // Create object to return to client
   let obj = {

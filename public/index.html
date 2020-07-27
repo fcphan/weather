@@ -38,11 +38,13 @@
   </head>
   <body class="bg-dark">
     <!-- HOME PAGE WITH INITAL SEARCH BAR -->
-    <div class="home_page invisible">
+    <div class="home_page visible">
       <div class="container" id="home_search_bar">
         <form
           id="location"
           class="bg-light border mx-auto p-4 border border-dark"
+          action="/weather"
+          method="post"
         >
           <h1 class="mb-3 text-center">PLACEHOLDER TEXT</h1>
           <div class="form-inline row justify-content-center">
@@ -52,10 +54,9 @@
               class="form-control ml-3 mr-3 w-75"
               id="location"
               placeholder="Portland, OR"
-              required
             />
             <div class="text-center">
-              <button type="button" class="btn btn-lrg btn-primary">
+              <button type="submit" class="btn btn-lrg btn-primary">
                 Search
               </button>
             </div>
@@ -68,7 +69,7 @@
     <!-- For this "page", give ids to the elements and put the class names in the js file -->
     <div class="weather_page visible">
       <!-- SEARCH BAR TO FIND DIFFERENT LOCATIONS AFTER GETTING RESULTS -->
-      <div class="container text-center" id="search_bar">
+      <div class="container text-center w-75" id="search_bar">
         <form
           id="location"
           class="bg-light border mx-auto p-2 border border-dark"
@@ -80,7 +81,6 @@
               class="form-control ml-3 mr-3 w-75"
               id="location"
               placeholder="Portland, OR"
-              required
             />
             <div class="text-center">
               <button type="button" class="btn btn-lrg btn-primary">
@@ -91,7 +91,7 @@
         </form>
       </div>
       <!-- CURRENT WEATHER, AQI, AQ NOTICE -->
-      <div class="container-fluid" id="current_container">
+      <div class="container-fluid w-75" id="current_container">
         <div class="row">
           <div
             class="card_container w-50 mx-auto pl-4 pr-2"
@@ -106,6 +106,7 @@
                   </div>
                   <div class="col text-right" id="temp_range">
                     <!-- ADD IMG HERE -->
+                    <img src="http://openweathermap.org/img/wn/01n@4x.png" />
                     <h4 class="text-right" id="tempHiLo">tempHi | tempLo</h4>
                   </div>
                 </div>
